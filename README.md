@@ -19,3 +19,17 @@ I was responsible for the development of graphics and related functions of the g
 
 ### Version control consultant
 Because I have some experience on git, I often solve the problem of using git for my teammates. For example, resolving conflicts, reverting versions, etc.
+
+### Technical goals
+#### Individual goals
+1. The implementation ofsnow deformation in UE4.
+2. Use unreal c++ and animation state machine to implement TPS character control.
+3. Toon shading post proccess (Cel shading + silhouette outline).
+4. Landscape material development.
+5. Learn to use unreal material editor and material blueprint.
+6. Learn how to customize shader in unreal
+7. Explore the way unreal C++ interacts with blueprints.
+
+#### Team goals
+1. Implementation of TPS game mechanics, including over-shoulder shooting and collision testing.
+2. Tower defender game mechanic implementation, including tower building, tower placement, various defense tower behaviors, enemy AI, etc.
