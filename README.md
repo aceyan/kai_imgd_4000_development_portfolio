@@ -80,3 +80,6 @@ Adjust the Blendable Location to Before Translucency in Post Process Material.
 This option makes the post-processing be done before the transparent object is drawn, so that the transparent or translucent object can be properly blended into the scene color.   
 Correct result:
 ![pic](Images/fogSolution2.png)
+
+#### Analysis of advantages and disadvantages:
+The use of post-processing to do toon shading is somewhat simple, we can unify the processing and adjustment of the entire game style and effect. But this is also its disadvantage. We lose the freedom to regulate individual objects. Post-processing outline will produce too many black edges for non-smooth objects, but will do well for more smooth and round objects.
