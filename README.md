@@ -2,7 +2,7 @@
 **Website Link**: https://zhouck0811.wixsite.com/irongoat   
 **Repository Link**: https://github.com/czhou2822/GitProjectGoat   
 
-![DemoScreenShot](Images/toonShading.png)
+![pic](Images/toonShading.png)
 
 
 ## My Role in the project
@@ -39,7 +39,7 @@ Because I have some experience on git, I often solve the problem of using git fo
 
 ## Implementation process and Challenges
 ### Snow deformation
-![SnowDeformation](Images/snowDeformation.png)
+![pic](Images/snowDeformation.png)
 
 #### Implementation
 1. Enable the skeletalmeshComponent Render CustomDepth Pass under the rendering tag of details. This option allows the character in the CustomDepth Pass, whether it is visible or not. This allows us to access the depth of the character at any time by reading the customDepth buffer.
@@ -50,4 +50,33 @@ Because I have some experience on git, I often solve the problem of using git fo
 6. In order to save the character's footprint, we also need to draw Snow_Scene_Captur_RTT1 into Snow_Scene_Captur_RTT2 (renderTarget2D) using a material named Snow_ADDRTT for each frame. In step 4, Snow_Scene_Captur_RTT2 was written to Snow_Scene_Captur_RTT1 with the latest footprint data superposition.   
 
 Depth material blueprint:
-![DemoScreenShot](Images/DepthMaterial.png)
+![pic](Images/DepthMaterial.png)
+
+#### Limitations and challenges
+Initially, the captureComponent2D I used was fixed to the scene. When we first started prototyping, the scene was small (2048 * 2048). CaptureComponent2D can easily cover the whole scene and capture the depth of the whole scene. But as the project progressed, our scene grew larger and larger (30,000 * 30,000). Using captureComponent2D capture on such a large scale is devastating on performance. The large size of renderTarget2D also have a significant impact on the performance of the game.   
+#### Optimization and solution
+1. Let captureComponent2D move with character and capture scope is fixed.   
+Since our game is in TPS control mode, in fact, our camera can only see a certain range of snow around the character, so only the information of snow deformation around the character needs to be recorded. This greatly optimizes the performance of the game.
+2. Adjustment of parameters of captureComponent2D   
+By default, captureComponent2D takes a screenshot of a scene with light, shadow, and reflection, but we only need depth in our program.  So, we can save performace cost by turning off unnecessary rendering options by adjusting the options under SceneCapture tag in detail setting of the component.
+
+### Toon shading post process
+![pic](Images/toonShading.png)
+#### Implementation
+1. The cel shading   
+I use the method from [Unreal Engine Forums](https://forums.unrealengine.com/development-discussion/rendering/114452-tutorial-simi-celshade-postprocess-material-work-with-light-color-point-lights-and-skybox), extracting the lighting information by using SceneColor to divide DiffuseColor, using a threshold value to determine whether the current pixel is bright or dark to get the effect of cartoon coloring.
+2. The outline generation   
+Generate outer line: the depth convolution/filter is used to calculate the difference  between the depth of the current pixel and the depth of the surrounding pixel. Where the difference is big enough is the silhouette of  objects and needs to be outlined.    
+Generate inner outer: similarly, the difference between the normals of the current pixel and the normals of the surrounding pixel can be calculated using convolution/filter. Where we have a big difference in normals is the silhouette of objects and we need to draw outline on. Since unreal uses deferred rendering, we can easily obtain the world normal of each pixel for calculation by accessing G-buffer.
+
+#### Issue
+Outline post process is not right when working with transparent objects, such as particle systems.
+In the picture below, even though the fog is thick, we can still see the outline of the enemy, which is not what we want.
+![pic](Images/fogIssue.png)
+
+#### Solution
+Adjust the Blendable Location to Before Translucency in Post Process Material.
+![pic](Images/fogSolution.png)   
+This option makes the post-processing be done before the transparent object is drawn, so that the transparent or translucent object can be properly blended into the scene color.   
+Correct result:
+![pic](Images/fogSolution2.png)
