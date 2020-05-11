@@ -83,3 +83,15 @@ Correct result:
 
 #### Analysis of advantages and disadvantages
 The use of post-processing to do toon shading is somewhat simple, we can unify the processing and adjustment of the entire game style and effect. But this is also its disadvantage. We lose the freedom to regulate individual objects. Post-processing outline will produce too much inner lines for non-smooth objects, but will do well for more smooth and round objects.
+
+### TPS character control
+#### Implementation
+The main C++ code is integrated into tpscharacterq.h and tpscharacterq.cpp.
+TPSCharacterQ is inherited from ACharacter, and it receives keyboard control to implement the basic operation of TPS characters using BindAxis and BindAction. It combines USpringArmComponent and UCameraComponent to achieve over-shoulder perspective shooting and aiming. By enabling the Camera Lag option of springArm, we can simulate the tween motion of the Camera when aiming at the over-shoulder Angle. As shown in figure:   
+![pic](Images/lag.png)   
+BP_PlayerCharaccter is a blueprint class inherited from TPSCharacterQ. In this blueprint class, we implement the interaction between the character's gun and the snow through interaction between c++ and the blueprint (snow sucking causes snow deformation).
+There is a BlueprintImplementableEvent decalred in TPSCharacterQ.h. When characters using his gun to suck the snow, we make it interact with the BP_PlayerCharaccter blueprint by calling this function.The position of Snow absorption will be recorded into Snow_Scene_Captur_RTT2(mentioned above) by using Hit Snow Material in the blueprint to achieve Snow deformation.    
+BlueprintImplementableEvent:   
+![pic](Images/OnCollectSnow.png)   
+Using Hit Snow Material to draw on Snow_Scene_Captur_RTT2 in blueprint:   
+![pic](Images/OnCollectSnowBlueprint.png)   
