@@ -1,6 +1,9 @@
-# IMGD 4000 Development Portfolio
+# Kai's IMGD 4000 Development Portfolio
 **Website Link**: https://zhouck0811.wixsite.com/irongoat   
 **Repository Link**: https://github.com/czhou2822/GitProjectGoat   
+
+![DemoScreenShot](Images/toonShading.png)
+
 
 ## My Role in the project
 ### Design
@@ -20,8 +23,8 @@ I was responsible for the development of graphics and related functions of the g
 ### Version control consultant
 Because I have some experience on git, I often solve the problem of using git for my teammates. For example, resolving conflicts, reverting versions, etc.
 
-### Technical goals
-#### Individual goals
+## Technical goals
+### Individual goals
 1. The implementation ofsnow deformation in UE4.
 2. Use unreal c++ and animation state machine to implement TPS character control.
 3. Toon shading post proccess (Cel shading + silhouette outline).
@@ -30,6 +33,21 @@ Because I have some experience on git, I often solve the problem of using git fo
 6. Learn how to customize shader in unreal
 7. Explore the way unreal C++ interacts with blueprints.
 
-#### Team goals
+### Team goals
 1. Implementation of TPS game mechanics, including over-shoulder shooting and collision testing.
 2. Tower defender game mechanic implementation, including tower building, tower placement, various defense tower behaviors, enemy AI, etc.
+
+## Implementation process and Challenges
+### Snow deformation
+![SnowDeformation](Images/snowDeformation.png)
+
+#### Implementation
+1. Enable the skeletalmeshComponent Render CustomDepth Pass under the rendering tag of details. This option allows the character in the CustomDepth Pass, whether it is visible or not. This allows us to access the depth of the character at any time by reading the customDepth buffer.
+2. Capture a  screenshot from below the floor using captureComponent2D.
+3. Use a Depth of material to post-process the scene screenshot.
+4. In the material named depth in the project file, the comparison between CustomDepth and SceneDepth can determine the position of the character standing. Mark the place where the character stands as black and the rest as red. Then, We save the post-processing results into renderTarget2D named Snow_Scene_Captur_RTT1.
+5. In the landscape rendering material, Snow_Scene_Captur_RTT1 can be used as LUT to find the places where character have stepped on, and tessellation and world displacement can be used to achieve snow deformation.
+6. In order to save the character's footprint, we also need to draw Snow_Scene_Captur_RTT1 into Snow_Scene_Captur_RTT2 (renderTarget2D) using a material named Snow_ADDRTT for each frame. In step 4, Snow_Scene_Captur_RTT2 was written to Snow_Scene_Captur_RTT1 with the latest footprint data superposition.   
+
+Depth material blueprint:
+![DemoScreenShot](Images/DepthMaterial.png)
