@@ -147,4 +147,4 @@ We can diff and merge blueprints by using Unreal version management with Git. Th
 ![pic](Images/diff.png) 
 
 ## Commit history   
-![pic](Images/commit history.png) 
+![pic](Images/commitHistory.png) 
