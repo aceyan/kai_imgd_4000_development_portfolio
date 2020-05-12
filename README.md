@@ -95,3 +95,24 @@ BlueprintImplementableEvent:
 ![pic](Images/OnCollectSnow.png)   
 Using Hit Snow Material to draw on Snow_Scene_Captur_RTT2 in blueprint:   
 ![pic](Images/OnCollectSnowBlueprint.png)   
+The switching between different animations implemented by using the [animationStateMachine](https://docs.unrealengine.com/en-US/Engine/Animation/AnimBlueprints/AnimGraph/index.html). [AimOffset](https://docs.unrealengine.com/en-US/Engine/Animation/AimOffset/index.html) is used in our game to adjust the angle of the aiming action.   
+
+#### Issue
+When I was making aimOffest, I noticed that sometimes the character's hand wasn't holding the butt of the gun, like the picture below.   
+![pic](Images/aimOffset1.png)   
+
+#### Solution 
+Using [IK (Inverse Kinematics)](https://docs.unrealengine.com/en-US/Engine/Animation/IKSetups/index.html) to adjust the animation, making the bone of left hand always follow the bone of right hand in aiming animation, to achieve correct result(left hand holding the gun correctly during the aiming animation).   
+Correct result:   
+![pic](Images/aimOffset2.png)   
+
+### Frozen Enemy 
+![pic](Images/frozen.png)    
+#### Implementation
+Using the red channel of vertex color on the mesh to be a mark of the ice. This means that our material will only apply the ice effect where the vertex color is red. Thus, it allows our artists to paint ice effect on enemy mesh and easily change where they want to apply ice frozen effect.   
+A noise texture is used in enemy's material to simulate the random distribution of snow, and the Fresnel and subsurface Shading model is to simulate the color of snow and ice. WorldPositionOffset output is used to produce icicle. In the enemy's material I blend the frozen color and the enemy's original color. Also, there is a variable exposed to control the amount of snow on the enemy. This allows us to achieve the effect that enemies are gradually frozen by our frostCannon.   
+Enemy's material blueprint:   
+![pic](Images/frozen2.png)   
+I use a customized material function to calculate the materialAttributes for frozen effect.    
+The customized material function - EnemyFrozen_func:      
+![pic](Images/frozen3.png)
