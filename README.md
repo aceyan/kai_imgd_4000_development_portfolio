@@ -43,11 +43,11 @@ Because I have some experience on git, I often solve the problem of using git fo
 
 #### Implementation
 1. Enable the skeletalmeshComponent Render CustomDepth Pass under the rendering tag of details. This option allows the character in the CustomDepth Pass, whether it is visible or not. This allows us to access the depth of the character at any time by reading the customDepth buffer.
-2. Capture a  screenshot from below the floor using captureComponent2D.
-3. Use a post-process material name Depth to process the scene screenshot.
-4. In the material named depth in the project file, the comparison between CustomDepth and SceneDepth can determine the position of the character standing. Mark the place where the character stands as black and the rest as red. Then, We save the post-processing results into renderTarget2D named Snow_Scene_Captur_RTT1.
+2. Capture a  snapshot from below the floor using captureComponent2D.[Diagram](Images/Capture.png)
+3. Use a post-process material name Depth to process the scene snapshot.
+4. In the material named Depth in the project file, the comparison between CustomDepth and SceneDepth can determine the position where the character standing on. Mark the place where the character stands on as black and the rest as red. Then, save the post-processing results into renderTarget2D named Snow_Scene_Captur_RTT1.
 5. In the landscape rendering material, Snow_Scene_Captur_RTT1 can be used as LUT to find the places where character have stepped on, and tessellation and world displacement can be used to achieve snow deformation.
-6. In order to save the character's footprint, we also need to draw Snow_Scene_Captur_RTT1 into Snow_Scene_Captur_RTT2 (renderTarget2D) using a material named Snow_ADDRTT for each frame. In step 4, Snow_Scene_Captur_RTT2 was written to Snow_Scene_Captur_RTT1 with the latest footprint data superposition.   
+6. In order to save the character's footprint, we also need to draw Snow_Scene_Captur_RTT1 into Snow_Scene_Captur_RTT2 (renderTarget2D) using a material named Snow_ADDRTT for each frame. In step 4, we need to blend Snow_Scene_Captur_RTT2 to genrate the final result, because it consists of the information of character's footprint in last frame.
 
 Depth material blueprint:
 ![pic](Images/DepthMaterial.png)
