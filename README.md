@@ -145,3 +145,6 @@ I chose github for version control of our project because I have some experience
 Tips: 
 We can diff and merge blueprints by using Unreal version management with Git. This visual comparison method can effectively resolve blueprint conflicts:   
 ![pic](Images/diff.png) 
+
+## Commit history   
+![pic](Images/commit history.png) 
