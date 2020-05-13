@@ -139,7 +139,7 @@ In addition to the problems and solutions mentioned above, here are some tips fo
 2. GC in UE4   
 As Professor Roberts mentioned in slack channel: The UObject isntance you created in GameMode should be referenced by adding UPROPERTY before the declaration or adding it to the "root set" using addToRoot, otherwise it will be garbage collected fairly quickly. [Here is a link about it](https://docs.unrealengine.com/zh-CN/Programming/UnrealArchitecture/Objects/Optimizations/index.html).
 3. Debug line is dangerous!    
-Do not use persistent debug line! (mentioned in the performance optimization and analysis section)
+Do not create persistent debug line every frame! (mentioned in the performance optimization and analysis section)
 
 
 ## Version control choice
