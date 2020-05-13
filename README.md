@@ -1,6 +1,7 @@
 # Kai's IMGD 4000 Development Portfolio
 **Website Link**: https://zhouck0811.wixsite.com/irongoat   
 **Repository Link**: https://github.com/czhou2822/GitProjectGoat   
+**GamePlay video**:https://www.youtube.com/watch?v=sRVivzJlX3c&feature=youtu.be
 
 ![pic](Images/toonShading.png)
 
